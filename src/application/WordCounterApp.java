@@ -1,27 +1,56 @@
 package application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import model.HashElement;
 import model.WordCounter;
 
 public class WordCounterApp {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		WordCounter test = new WordCounter(5);
-		test.printTable();
+	public static void main(String[] args) throws Exception {
+		Scanner in = new Scanner(System.in);
+		WordCounter test = new WordCounter(10);
+		System.out.print("Enter a txt file: ");
+		String txt = in.next();
+		File newFile = new File("res/" + txt);
+		Scanner file;
+
+		HashElement hash = null;
+		int num = 0;
+		int unique = 0;
+		int count = 0;
+		String[] arr = null;
+		String word = null;
+		String temp = null;
+
 		try {
-			test.put(new HashElement("ONE"));
-			test.put(new HashElement("TWO"));
-			test.put(new HashElement("THREE"));
-			test.put(new HashElement("FOUR"));
-			test.put(new HashElement("FIVE"));
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("fail");
+			file = new Scanner(newFile);
+			while (file.hasNext()) {
+				temp = file.next();
+				temp = temp.toLowerCase();
+				hash = new HashElement(temp);
+				hash.setCount(1);
+				test.put(hash);
+
+				arr = temp.split("");
+				count++;
+				for (int i = 0; i < arr.length; i++) {
+					if (arr[i].compareTo(temp) == 1) {
+						unique++;
+					}
+				}
+			}
+			unique = count - unique;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		test.printTable();
-		System.out.println(test.remove(new HashElement("ONE")));
+
+		System.out.println(word + " " + num);
+		System.out.println("Total Words: " + count);
+		System.out.println("Total Unique Words: " + unique);
 		test.printTable();
 	}
-
 }
