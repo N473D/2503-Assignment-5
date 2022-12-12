@@ -11,10 +11,21 @@ public class WordCounterApp {
 
 	public static void main(String[] args) throws Exception {
 		Scanner in = new Scanner(System.in);
-		WordCounter test = new WordCounter(10);
-		System.out.print("Enter a txt file: ");
+		WordCounter test;
+		System.out.print("Enter a txt file(no file type): ");
 		String txt = in.next();
-		File newFile = new File("res/" + txt);
+		File newFile = new File("res/" + txt + ".txt");
+		int size = -1;
+		while(size <= 0) {
+			System.out.print("Enter size for the Hashtable: ");
+			if (in.hasNextInt()) {
+				size = Math.abs(in.nextInt());
+				in.nextLine();
+			} else {
+				System.out.println("Bad Input Please try again: ");
+			}
+		}
+		test = new WordCounter(size);
 		Scanner file;
 
 		HashElement hash = null;
@@ -48,9 +59,9 @@ public class WordCounterApp {
 			e.printStackTrace();
 		}
 
-		System.out.println(word + " " + num);
-		System.out.println("Total Words: " + count);
-		System.out.println("Total Unique Words: " + unique);
+		System.out.println(test.most());
+		System.out.println("Total Words: " + test.countWords());
+		System.out.println("Total Unique Words: " + test.uniqueWords());
 		test.printTable();
 	}
 }

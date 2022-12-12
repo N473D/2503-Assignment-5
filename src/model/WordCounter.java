@@ -1,11 +1,12 @@
 package model;
 
+//
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class WordCounter implements HashInterface<HashElement>{
+public class WordCounter implements HashInterface<HashElement> {
 	private HashElement[] hashStorage;
-	
+
 	@Override
 	public int gethashCode(HashElement key) {
 		return key.textQuadHash() % hashStorage.length;
@@ -15,8 +16,10 @@ public class WordCounter implements HashInterface<HashElement>{
 	public void put(HashElement key) throws Exception {
 		int used = 0;
 		for (int i = 0; i < hashStorage.length; i++) {
-			if(hashStorage[i] != null) {
+			if (hashStorage[i] != null) {
 				used++;
+			} else {
+				break;
 			}
 //			System.out.println(used);
 		}
@@ -26,17 +29,18 @@ public class WordCounter implements HashInterface<HashElement>{
 //			System.out.println(hashStorage);
 			throw new Exception("Full Hashmap");
 		}
-		boolean placed = false;
 		int counter = 0;
-		while(!placed) {
+		while (true) {
 			int index = (gethashCode(key) + (counter ^ 2)) % hashStorage.length;
-			if(hashStorage[index] == null) {
+			if (hashStorage[index] == null) {
 				hashStorage[index] = key;
-				placed = !placed;
+				break;
 			} else if (hashStorage[index].compareTo(key.getWord()) == 0) {
 				hashStorage[index].incrementCount();
+				break;
+			} else {
+				counter++;
 			}
-			counter++;
 		}
 	}
 
@@ -45,7 +49,7 @@ public class WordCounter implements HashInterface<HashElement>{
 		HashElement saver = null;
 		int used = 0;
 		for (int i = 0; i < hashStorage.length; i++) {
-			if(hashStorage[i] != null) {
+			if (hashStorage[i] != null) {
 				used++;
 			}
 		}
@@ -56,8 +60,8 @@ public class WordCounter implements HashInterface<HashElement>{
 		}
 		boolean found = false;
 		int counter = 0;
-		System.out.println("checkpoint2");
-		while(!found) {
+//		System.out.println("checkpoint2");
+		while (!found) {
 //			System.out.println(counter);
 			int index = (gethashCode(key) + (counter ^ 2)) % hashStorage.length;
 //			System.out.println(index);
@@ -80,15 +84,15 @@ public class WordCounter implements HashInterface<HashElement>{
 		for (int i = 0; i < hashStorage.length; i++) {
 			hashStorage[i] = null;
 		}
-		
+
 	}
-	
+
 	@Override
 	public void printTable() {
 		System.out.print("[ ");
 		for (int i = 0; i < hashStorage.length; i++) {
 			System.out.print(hashStorage[i]);
-			if (i != hashStorage.length-1) {
+			if (i != hashStorage.length - 1) {
 				System.out.print(", ");
 			}
 		}
@@ -109,6 +113,41 @@ public class WordCounter implements HashInterface<HashElement>{
 		for (int i = 0; i < hashStorage.length; i++) {
 			hashStorage[i] = null;
 		}
+	}
+
+	public int uniqueWords() {
+		int count = 0;
+		for (int i = 0; i < hashStorage.length; i++) {
+			if (hashStorage[i] != null) {
+				count++;
+			} else {
+//				System.out.println(count + ":" + i);
+			}
+		}
+		return count;
+	}
+
+	public String most() {
+		int most = 0;
+		for (int i = 0; i < hashStorage.length; i++) {
+			if (hashStorage[most] == null && hashStorage[i] != null) {
+				most = i;
+			} else if (hashStorage[i] != null && hashStorage[most] != null
+					&& hashStorage[i].getCount() > hashStorage[most].getCount()) {
+				most = i;
+			}
+		}
+		return "Most frequent word: " + hashStorage[most].toString();
+	}
+
+	public int countWords() {
+		int count = 0;
+		for (int i = 0; i < hashStorage.length; i++) {
+			if (hashStorage[i] != null) {
+				count += hashStorage[i].getCount();
+			}
+		}
+		return count;
 	}
 
 	@Override
