@@ -29,11 +29,8 @@ public class WordCounterApp {
 		Scanner file;
 
 		HashElement hash = null;
-		int num = 0;
 		int unique = 0;
 		int count = 0;
-		String[] arr = null;
-		String word = null;
 		String temp = null;
 
 		try {
@@ -44,14 +41,6 @@ public class WordCounterApp {
 				hash = new HashElement(temp);
 				hash.setCount(1);
 				test.put(hash);
-
-				arr = temp.split("");
-				count++;
-				for (int i = 0; i < arr.length; i++) {
-					if (arr[i].compareTo(temp) == 1) {
-						unique++;
-					}
-				}
 			}
 			unique = count - unique;
 		} catch (FileNotFoundException e) {
