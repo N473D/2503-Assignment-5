@@ -2,9 +2,9 @@ package model;
 
 /**
  * Element for hashing strings and counting instances of strings
- * 
  * @author Nathan DeBliek
- * @version 1.0 Last Modified: 2022/12/11 added javadoc Nathan
+ * @version 1.0
+ * Last Modified: 2022/12/11 added javadoc Nathan
  */
 public class HashElement implements Comparable<String> {
 
