@@ -4,6 +4,12 @@ package model;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
+/**
+ * a word counting hash table class
+ * @author Nathan DeBliek
+ * @version 1.0
+ * Last Modified: 2022/12/11 added javadoc Nathan
+ */
 public class WordCounter implements HashInterface<HashElement> {
 	private HashElement[] hashStorage;
 
@@ -100,21 +106,37 @@ public class WordCounter implements HashInterface<HashElement> {
 		System.out.println();
 	}
 
+	/**
+	 * gets the hash table
+	 * @return the hash table array
+	 */
 	public HashElement[] getHashStorage() {
 		return hashStorage;
 	}
-
+	
+	/**
+	 * sets the hash table
+	 * @param hashStorage the hash table to input
+	 */
 	public void setHashStorage(HashElement[] hashStorage) {
 		this.hashStorage = hashStorage;
 	}
-
+	
+	/**
+	 * constructs a new word counter hash table
+	 * @param x size of the table
+	 */
 	public WordCounter(int x) {
 		this.hashStorage = new HashElement[x];
 		for (int i = 0; i < hashStorage.length; i++) {
 			hashStorage[i] = null;
 		}
 	}
-
+	
+	/**
+	 * calculates the number of unique words
+	 * @return number of unique words
+	 */
 	public int uniqueWords() {
 		int count = 0;
 		for (int i = 0; i < hashStorage.length; i++) {
@@ -126,7 +148,11 @@ public class WordCounter implements HashInterface<HashElement> {
 		}
 		return count;
 	}
-
+	
+	/**
+	 * finds the most used word
+	 * @return a string statement on the most used word
+	 */
 	public String most() {
 		int most = 0;
 		for (int i = 0; i < hashStorage.length; i++) {
@@ -139,7 +165,11 @@ public class WordCounter implements HashInterface<HashElement> {
 		}
 		return "Most frequent word: " + hashStorage[most].toString();
 	}
-
+	
+	/**
+	 * counts the words
+	 * @return num of words
+	 */
 	public int countWords() {
 		int count = 0;
 		for (int i = 0; i < hashStorage.length; i++) {
